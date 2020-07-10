@@ -12,4 +12,3 @@ export const dbConfig : ConnectionOptions = {
         path.join(__dirname, "./../models/*.ts")
     ]
 }
-
