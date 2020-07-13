@@ -3,6 +3,7 @@ import { dbConfig } from './common/config';
 import { createConnection } from 'typeorm';
 import proizvodjacRouter from './routers/proizvodjac-routers';
 import modelRouter from './routers/model-roters';
+import statusRouter from './routers/status-routers';
 import bodyParser from 'body-parser';
 
 class App {
@@ -27,6 +28,7 @@ class App {
     private routing() {
         this.serverApp.use('/proizvodjaci', proizvodjacRouter);
         this.serverApp.use('/modeli', modelRouter);
+        this.serverApp.use('/statusi', statusRouter);
     }
 
     private config() {

@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
-@Entity('modeli')
-export class Model {
+@Entity('statusi')
+export class Status {
 
     @PrimaryGeneratedColumn({
         name: 'id',
@@ -10,12 +10,12 @@ export class Model {
     id: number;
 
     @Column({
-        name: 'oznaka',
+        name: 'tip',
         nullable: false,
-        length: 100,
+        length: 20,
         type: 'varchar'
     })
-    oznaka: string;
+    tip: string;
 
 }
 
