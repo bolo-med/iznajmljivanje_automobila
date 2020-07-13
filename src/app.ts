@@ -4,6 +4,7 @@ import { createConnection } from 'typeorm';
 import proizvodjacRouter from './routers/proizvodjac-routers';
 import modelRouter from './routers/model-roters';
 import statusRouter from './routers/status-routers';
+import korisnikRouter from './routers/korisnik-routers';
 import bodyParser from 'body-parser';
 
 class App {
@@ -29,6 +30,7 @@ class App {
         this.serverApp.use('/proizvodjaci', proizvodjacRouter);
         this.serverApp.use('/modeli', modelRouter);
         this.serverApp.use('/statusi', statusRouter);
+        this.serverApp.use('/korisnici', korisnikRouter);
     }
 
     private config() {
