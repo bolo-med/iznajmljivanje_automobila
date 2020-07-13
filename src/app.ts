@@ -2,6 +2,7 @@ import express from 'express';
 import { dbConfig } from './common/config';
 import { createConnection } from 'typeorm';
 import proizvodjacRouter from './routers/proizvodjac-routers';
+import modelRouter from './routers/model-roters';
 import bodyParser from 'body-parser';
 
 class App {
@@ -25,6 +26,7 @@ class App {
 
     private routing() {
         this.serverApp.use('/proizvodjaci', proizvodjacRouter);
+        this.serverApp.use('/modeli', modelRouter);
     }
 
     private config() {
