@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Automobil } from "./automobil-model";
+import { Korisnik } from "./korisnik-model";
 
 @Entity('rezervacije')
 export class Rezervacija {
@@ -50,6 +52,14 @@ export class Rezervacija {
         type: "date"
     })
     datumStvarnogVracanja: Date;
+
+    @ManyToOne(type => Automobil, automobil => automobil.rezervacije)
+    @JoinColumn({name: 'automobil_id'})
+    automobil: Automobil;
+
+    @ManyToOne(type => Korisnik, korisnik => korisnik.rezervacije)
+    @JoinColumn({name: 'korisnik_id'})
+    korisnik: Korisnik;
 
 }
 

@@ -8,7 +8,7 @@ export class ModelRepository {
     };
 
     getModelByID = (id: number) => {
-        return getManager().getRepository(Model).findOne(id);
+        return getManager().getRepository(Model).findOne(id, { relations: ['automobili'] });
     };
 
     insertModel = (model: Model) => {

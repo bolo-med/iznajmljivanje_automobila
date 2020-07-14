@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Rezervacija } from "./rezervacija-model";
 
 @Entity('korisnici')
 export class Korisnik {
@@ -47,6 +48,9 @@ export class Korisnik {
         type: 'varchar'
     })
     telefon: string;
+
+    @OneToMany(type => Rezervacija, rezervacija => rezervacija.korisnik)
+    rezervacije: Rezervacija[];
 
 }
 

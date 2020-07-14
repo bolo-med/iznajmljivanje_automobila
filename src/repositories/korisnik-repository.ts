@@ -8,7 +8,7 @@ export class KorisnikRepository {
     };
 
     getKorisnikByID = (id: number) => {
-        return getManager().getRepository(Korisnik).findOne(id);
+        return getManager().getRepository(Korisnik).findOne(id, { relations: ['rezervacije'] });
     };
 
     insertKorisnik = (korisnik: Korisnik) => {

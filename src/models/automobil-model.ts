@@ -1,5 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { Proizvodjac } from "./proizvodjac-model";
+import { Status } from "./status-model";
+import { Model } from "./model-model";
+import { Rezervacija } from "./rezervacija-model";
 
 @Entity('automobili')
 export class Automobil {
@@ -69,8 +72,20 @@ export class Automobil {
     })
     cijena: number;
 
-    // @ManyToOne()
-    // proizvodjac: Proizvodjac;
+    @ManyToOne(type => Status, status => status.automobili)
+    @JoinColumn({name: 'status_id'})
+    status: Status;
+
+    @ManyToOne(type => Proizvodjac, proizvodjac => proizvodjac.automobili)
+    @JoinColumn({name: 'proizvodjac_id'})
+    proizvodjac: Proizvodjac;
+
+    @ManyToOne(type => Model, model => model.automobili)
+    @JoinColumn({name: 'model_id'})
+    model: Model;
+
+    @OneToMany(type => Rezervacija, rezervacija => rezervacija.automobil)
+    rezervacije: Rezervacija[];
 
 }
 

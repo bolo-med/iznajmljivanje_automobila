@@ -8,7 +8,7 @@ export class AutomobilRepository {
     };
 
     getAutomobilByID = (id: number) => {
-        return getManager().getRepository(Automobil).findOne(id);
+        return getManager().getRepository(Automobil).findOne(id, { relations: ['rezervacije'] });
     };
 
     insertAutomobil = (automobil: Automobil) => {

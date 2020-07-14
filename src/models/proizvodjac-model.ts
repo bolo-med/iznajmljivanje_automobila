@@ -1,4 +1,5 @@
-import { PrimaryGeneratedColumn, Entity, Column } from "typeorm";
+import { PrimaryGeneratedColumn, Entity, Column, OneToMany } from "typeorm";
+import { Automobil } from "./automobil-model";
 
 @Entity('proizvodjaci')
 export class Proizvodjac {
@@ -17,4 +18,8 @@ export class Proizvodjac {
     })
     naziv: string;
 
+    @OneToMany(type => Automobil, automobil => automobil.proizvodjac)
+    automobili: Automobil[];
+
 }
+

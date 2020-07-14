@@ -8,7 +8,7 @@ export class StatusRepository {
     };
 
     getStatusByID = (id: number) => {
-        return getManager().getRepository(Status).findOne(id);
+        return getManager().getRepository(Status).findOne(id, { relations: ['automobili'] });
     };
 
     insertStatus = (status: Status) => {

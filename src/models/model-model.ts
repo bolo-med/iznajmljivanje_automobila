@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Automobil } from "./automobil-model";
 
 @Entity('modeli')
 export class Model {
@@ -16,6 +17,9 @@ export class Model {
         type: 'varchar'
     })
     oznaka: string;
+
+    @OneToMany(type => Automobil, automobil => automobil.model)
+    automobili: Automobil[];
 
 }
 

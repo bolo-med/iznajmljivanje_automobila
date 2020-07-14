@@ -8,7 +8,7 @@ export class ProizvodjacRepository {
     };
 
     getProizvodjacByID = (id: number) => {
-        return getManager().getRepository(Proizvodjac).findOne(id);
+        return getManager().getRepository(Proizvodjac).findOne(id, { relations: ['automobili'] });
     };
 
     insertProizvodjac = (proizvodjac: Proizvodjac) => {
