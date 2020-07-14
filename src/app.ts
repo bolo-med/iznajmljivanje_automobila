@@ -5,6 +5,7 @@ import proizvodjacRouter from './routers/proizvodjac-routers';
 import modelRouter from './routers/model-roters';
 import statusRouter from './routers/status-routers';
 import korisnikRouter from './routers/korisnik-routers';
+import automobilRouter from './routers/automobil-routers';
 import bodyParser from 'body-parser';
 
 class App {
@@ -31,6 +32,7 @@ class App {
         this.serverApp.use('/modeli', modelRouter);
         this.serverApp.use('/statusi', statusRouter);
         this.serverApp.use('/korisnici', korisnikRouter);
+        this.serverApp.use('/automobili', automobilRouter);
     }
 
     private config() {
