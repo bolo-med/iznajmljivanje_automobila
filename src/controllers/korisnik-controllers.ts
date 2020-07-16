@@ -31,7 +31,14 @@ export const insertKorisnik = (req: Request, res: Response) => {
 };
 
 export const updateKorisnik = (req: Request, res: Response) => {
-    let korisnik: Korisnik = Object.create(req.body);
+    // let korisnik: Korisnik = Object.create(req.body);
+    let korisnik: Korisnik = new Korisnik();
+    korisnik.id = req.body.id;
+    korisnik.ime = req.body.ime;
+    korisnik.prezime = req.body.prezime;
+    korisnik.godRodjenja = req.body.godRodjenja;
+    korisnik.adresa = req.body.adresa;
+    korisnik.telefon = req.body.telefon;
     let korisnikRepository: KorisnikRepository = new KorisnikRepository();
     korisnikRepository.updateKorisnik(korisnik).then(data => {
         res.send(data);

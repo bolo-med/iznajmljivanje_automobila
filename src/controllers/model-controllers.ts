@@ -31,7 +31,10 @@ export const insertModel = (req: Request, res: Response) => {
 };
 
 export const updateModel = (req: Request, res: Response) => {
-    let model: Model = Object.create(req.body);
+    // let model: Model = Object.create(req.body);
+    let model: Model = new Model();
+    model.id = req.body.id;
+    model.oznaka = req.body.oznaka;
     let modelRepository: ModelRepository = new ModelRepository();
     modelRepository.updateModel(model).then(data => {
         res.send(data);

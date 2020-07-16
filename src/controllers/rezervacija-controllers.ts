@@ -31,7 +31,15 @@ export const insertRezervacija = (req: Request, res: Response) => {
 };
 
 export const updateRezervacija = (req: Request, res: Response) => {
-    let rezervacija: Rezervacija = Object.create(req.body);
+    // let rezervacija: Rezervacija = Object.create(req.body);
+    let rezervacija: Rezervacija = new Rezervacija();
+    rezervacija.id = req.body.id;
+    rezervacija.korisnikID = req.body.korisnikID;
+    rezervacija.automobilID = req.body.automobilID;
+    rezervacija.datumPreuzimanja = req.body.datumPreuzimanja;
+    rezervacija.datumVracanja = req.body.datumVracanja;
+    rezervacija.realizovana = req.body.realizovana;
+    rezervacija.datumStvarnogVracanja = req.body.datumStvarnogVracanja;
     let rezervacijaRepository: RezervacijaRepository = new RezervacijaRepository();
     rezervacijaRepository.updateRezervacija(rezervacija).then(data => {
         res.send(data);

@@ -31,7 +31,17 @@ export const insertAutomobil = (req: Request, res: Response) => {
 };
 
 export const updateAutomobil = (req: Request, res: Response) => {
-    let automobil: Automobil = Object.create(req.body);
+    // let automobil: Automobil = Object.create(req.body);
+    let automobil: Automobil = new Automobil();
+    automobil.id = req.body.id;
+    automobil.proizvodjacID = req.body.proizvodjacID;
+    automobil.modelID = req.body.modelID;
+    automobil.godiste = req.body.godiste;
+    automobil.motor = req.body.motor;
+    automobil.mjenjac = req.body.mjenjac;
+    automobil.statusID = req.body.statusID;
+    automobil.fotografija = req.body.fotografija;
+    automobil.cijena = req.body.cijena;
     let automobilRepository: AutomobilRepository = new AutomobilRepository();
     automobilRepository.updateAutomobil(automobil).then(data => {
         res.send(data);

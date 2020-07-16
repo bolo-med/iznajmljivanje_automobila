@@ -31,7 +31,10 @@ export const insertProizvodjac = (req: Request, res: Response) => {
 };
 
 export const updateProizvodjac = (req: Request, res: Response) => {
-    let proizvodjac: Proizvodjac = Object.create(req.body);
+    // let proizvodjac: Proizvodjac = Object.create(req.body);
+    let proizvodjac: Proizvodjac = new Proizvodjac();
+    proizvodjac.id = req.body.id;
+    proizvodjac.naziv = req.body.naziv;
     let proizvodjacRepository: ProizvodjacRepository = new ProizvodjacRepository();
     proizvodjacRepository.updateProizvodjac(proizvodjac).then(data => {
         res.send(data);

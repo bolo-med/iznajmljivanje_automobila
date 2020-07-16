@@ -31,7 +31,10 @@ export const insretStatus = (req: Request, res: Response) => {
 };
 
 export const updateStatus = (req: Request, res: Response) => {
-    let status: Status = Object.create(req.body);
+    // let status: Status = Object.create(req.body);
+    let status: Status = new Status();
+    status.id = req.body.id;
+    status.tip = req.body.tip;
     let statusRepository: StatusRepository = new StatusRepository();
     statusRepository.updateStatus(status).then(data => {
         res.send(data);
