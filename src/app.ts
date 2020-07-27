@@ -8,6 +8,7 @@ import korisnikRouter from './routers/korisnik-routers';
 import automobilRouter from './routers/automobil-routers';
 import rezervacijaRouter from './routers/rezervacija-routers';
 import bodyParser from 'body-parser';
+import { Request, Response } from 'express';
 
 class App {
 
@@ -39,6 +40,15 @@ class App {
 
     private config() {
         this.serverApp.use(bodyParser.json());
+
+        // middleware
+        this.serverApp.use((request: Request, response: Response, next) => {
+            response.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+            response.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Origin');
+            response.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+
+            next();
+        });
     }
 
 }
