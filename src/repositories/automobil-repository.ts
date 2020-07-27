@@ -4,7 +4,7 @@ import { Automobil } from './../models/automobil-model';
 export class AutomobilRepository {
 
     getAllAutomobili = () => {
-        return getManager().getRepository(Automobil).find();
+        return getManager().getRepository(Automobil).find({ relations: ['proizvodjac', 'model', 'status'] });
     };
 
     getAutomobilByID = (id: number) => {
