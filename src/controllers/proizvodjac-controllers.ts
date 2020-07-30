@@ -24,9 +24,15 @@ export const insertProizvodjac = (req: Request, res: Response) => {
     let proizvodjac: Proizvodjac = Object.create(req.body);
     let proizvodjacRepository: ProizvodjacRepository = new ProizvodjacRepository();
     proizvodjacRepository.insertProizvodjac(proizvodjac).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 

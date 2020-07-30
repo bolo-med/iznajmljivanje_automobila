@@ -21,12 +21,18 @@ export const getStatusByID = (req: Request, res: Response) => {
 };
 
 export const insretStatus = (req: Request, res: Response) => {
-    let status: Status = Object.create(req.body);
+    let status1: Status = Object.create(req.body);
     let statusRepository: StatusRepository = new StatusRepository();
-    statusRepository.insertStatus(status).then(data => {
-        res.send(data);
+    statusRepository.insertStatus(status1).then(data => {
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 

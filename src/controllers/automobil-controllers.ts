@@ -25,10 +25,9 @@ export const insertAutomobil = (req: Request, res: Response) => {
     let automobilRepository: AutomobilRepository = new AutomobilRepository();
     automobilRepository.insertAutomobil(automobil).then(data => {
         res.send({
-                status: 0,
-                data: data
-            }
-        );
+            status: 0,
+            data: data
+        });
     }).catch(err => {
         res.send({
             status: -1,
