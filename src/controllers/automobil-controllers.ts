@@ -59,9 +59,15 @@ export const updateAutomobil = (req: Request, res: Response) => {
 export const deleteAutomobil = (req: Request, res: Response) => {
     let automobilRepository: AutomobilRepository = new AutomobilRepository();
     automobilRepository.deleteAutomobil(+req.params.id).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 

@@ -24,9 +24,15 @@ export const insertModel = (req: Request, res: Response) => {
     let model: Model = Object.create(req.body);
     let modelRepository: ModelRepository = new ModelRepository();
     modelRepository.insertModel(model).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 
