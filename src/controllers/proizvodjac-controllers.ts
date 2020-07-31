@@ -52,9 +52,15 @@ export const updateProizvodjac = (req: Request, res: Response) => {
 export const deleteProizvodjac = (req: Request, res: Response) => {
     let proizvodjacRepository: ProizvodjacRepository = new ProizvodjacRepository();
     proizvodjacRepository.deleteProizvodjac(+req.params.id).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 

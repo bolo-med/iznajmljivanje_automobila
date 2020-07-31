@@ -52,9 +52,15 @@ export const updateStatus = (req: Request, res: Response) => {
 export const deleteStatus = (req: Request, res: Response) => {
     let statusRepository: StatusRepository = new StatusRepository();
     statusRepository.deleteStatus(+req.params.id).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 
