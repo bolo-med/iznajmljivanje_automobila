@@ -43,9 +43,15 @@ export const updateProizvodjac = (req: Request, res: Response) => {
     proizvodjac.naziv = req.body.naziv;
     let proizvodjacRepository: ProizvodjacRepository = new ProizvodjacRepository();
     proizvodjacRepository.updateProizvodjac(proizvodjac).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data:data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 
