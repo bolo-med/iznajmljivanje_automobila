@@ -43,9 +43,15 @@ export const updateModel = (req: Request, res: Response) => {
     model.oznaka = req.body.oznaka;
     let modelRepository: ModelRepository = new ModelRepository();
     modelRepository.updateModel(model).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 

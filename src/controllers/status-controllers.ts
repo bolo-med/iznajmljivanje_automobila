@@ -43,9 +43,15 @@ export const updateStatus = (req: Request, res: Response) => {
     status.tip = req.body.tip;
     let statusRepository: StatusRepository = new StatusRepository();
     statusRepository.updateStatus(status).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 
