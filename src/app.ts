@@ -9,6 +9,7 @@ import automobilRouter from './routers/automobil-routers';
 import rezervacijaRouter from './routers/rezervacija-routers';
 import bodyParser from 'body-parser';
 import { Request, Response } from 'express';
+import path from 'path';
 
 class App {
 
@@ -40,6 +41,7 @@ class App {
 
     private config() {
         this.serverApp.use(bodyParser.json());
+        this.serverApp.use(express.static(path.join(__dirname, 'public/uploads')));
 
         // middleware
         this.serverApp.use((request: Request, response: Response, next) => {
