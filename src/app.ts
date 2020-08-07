@@ -7,6 +7,7 @@ import statusRouter from './routers/status-routers';
 import korisnikRouter from './routers/korisnik-routers';
 import automobilRouter from './routers/automobil-routers';
 import rezervacijaRouter from './routers/rezervacija-routers';
+import uploadRouter from './common/file-upload';
 import bodyParser from 'body-parser';
 import { Request, Response } from 'express';
 import path from 'path';
@@ -37,6 +38,7 @@ class App {
         this.serverApp.use('/korisnici', korisnikRouter);
         this.serverApp.use('/automobili', automobilRouter);
         this.serverApp.use('/rezervacije', rezervacijaRouter);
+        this.serverApp.use('/upload', uploadRouter);
     }
 
     private config() {
@@ -48,6 +50,8 @@ class App {
             response.header('Access-Control-Allow-Origin', 'http://localhost:4200');
             response.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Origin');
             response.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+            // response.setHeader("Access-Control-Allow-Credentials", "true"); // sa interneta
+            response.header("Access-Control-Allow-Credentials", "true"); // radi i ovako
 
             next();
         });
