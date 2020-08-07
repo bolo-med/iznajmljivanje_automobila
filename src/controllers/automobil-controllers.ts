@@ -50,9 +50,15 @@ export const updateAutomobil = (req: Request, res: Response) => {
     automobil.cijena = req.body.cijena;
     let automobilRepository: AutomobilRepository = new AutomobilRepository();
     automobilRepository.updateAutomobil(automobil).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 
