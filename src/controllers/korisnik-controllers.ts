@@ -1,6 +1,9 @@
 import { Request, Response } from 'express';
 import { KorisnikRepository } from './../repositories/korisnik-repository';
 import { Korisnik } from './../models/korisnik-model';
+import crypto from 'crypto';
+import jwt from 'jsonwebtoken';
+import passport from 'passport';
 
 export const getAllKorisnici = (req: Request, res: Response) => {
     let korisnikRepository: KorisnikRepository = new KorisnikRepository();
@@ -54,5 +57,74 @@ export const deleteKorisnik = (req: Request, res: Response) => {
     }).catch(err => {
         res.send(err);
     });
+};
+
+export const register = (request: Request, response: Response) => {
+    let korisnik: Korisnik = new Korisnik();
+    let korisnikRepository: KorisnikRepository = new KorisnikRepository();
+
+    korisnik.ime = request.body.ime;
+    korisnik.prezime = request.body.prezime;
+    korisnik.godRodjenja = request.body.godRodjenja;
+    korisnik.adresa = request.body.adresa;
+    korisnik.telefon = request.body.telefon;
+    korisnik.username = request.body.username;
+    korisnik.hashedPassword = crypto.pbkdf2Sync(request.body.password, 
+                                                'SALT', 
+                                                1000, 
+                                                64, 
+                                                'SHA512').toString('hex');
+    korisnik.isAdmin = 0;
+    
+    korisnikRepository.insertKorisnik(korisnik).then(data => {
+
+        let expiry = new Date();
+        expiry.setDate(expiry.getDate() + 1);
+
+        let token = jwt.sign({
+            id: data.identifiers[0],
+            username: request.body.username,
+            isAdmin: 0,
+            expiry: expiry
+        }, 'SECRET');
+
+        response.send({
+            status: 0,
+            token // token: token
+        });
+
+    }).catch((err) => {
+        response.send({
+            status: -1,
+            error: err // Stajalo je data: err
+        });
+    });
+};
+
+export const login = (request: Request, response: Response) => {
+    passport.authenticate('custom', (error, user) => {
+        if (error) {
+            response.send({
+                status: -1,
+                error // error: error
+            });
+        }
+        else {
+            let expiry = new Date();
+            expiry.setDate(expiry.getDate() + 1);
+
+            let token = jwt.sign({
+                id: user.id,
+                username: user.username,
+                isAdmin: user.isAdmin,
+                expiry: expiry
+            }, 'SECRET');
+
+            response.send({
+                status: 0,
+                token // token: token
+            });
+        }
+    })(request, response);
 };
 

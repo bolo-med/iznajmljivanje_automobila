@@ -11,6 +11,10 @@ import uploadRouter from './common/file-upload';
 import bodyParser from 'body-parser';
 import { Request, Response } from 'express';
 import path from 'path';
+import passport from 'passport';
+import passportCustom from 'passport-custom';
+import { KorisnikRepository } from './repositories/korisnik-repository';
+import crypto from 'crypto';
 
 class App {
 
@@ -20,6 +24,7 @@ class App {
         this.serverApp = express();
         this.config();
         this.connectToDB();
+        this.authConfig();
         this.routing();
     }
 
@@ -31,11 +36,36 @@ class App {
         });
     }
 
+    private authConfig() {
+
+        passport.use('custom', new passportCustom.Strategy((request, done) => {
+            let korisnikRepository = new KorisnikRepository();
+            korisnikRepository.getKorisnikByUsername(request.body.username).then(data => {
+                let hash = crypto.pbkdf2Sync(request.body.password, 
+                                             'SALT', 
+                                             1000, 
+                                             64, 
+                                             'SHA512').toString('hex');
+
+                if (hash.toLowerCase() === data.hashedPassword.toLowerCase()) {
+                    done(null, data);
+                }
+                else {
+                    done('Pogresni kredencijali!');
+                }
+            }).catch(err => {
+                done(err);
+            });
+        }));
+
+        this.serverApp.use(passport.initialize());
+    }
+
     private routing() {
         this.serverApp.use('/proizvodjaci', proizvodjacRouter);
         this.serverApp.use('/modeli', modelRouter);
         this.serverApp.use('/statusi', statusRouter);
-        this.serverApp.use('/korisnici', korisnikRouter);
+        this.serverApp.use('', korisnikRouter);
         this.serverApp.use('/automobili', automobilRouter);
         this.serverApp.use('/rezervacije', rezervacijaRouter);
         this.serverApp.use('/upload', uploadRouter);
@@ -48,7 +78,7 @@ class App {
         // middleware
         this.serverApp.use((request: Request, response: Response, next) => {
             response.header('Access-Control-Allow-Origin', 'http://localhost:4200');
-            response.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Origin');
+            response.header('Access-Control-Allow-Headers', 'Content-Type, X-Requested-With, Origin, Authorization');
             response.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
             // response.setHeader("Access-Control-Allow-Credentials", "true"); // sa interneta
             response.header("Access-Control-Allow-Credentials", "true"); // radi i ovako

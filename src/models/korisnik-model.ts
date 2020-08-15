@@ -49,6 +49,29 @@ export class Korisnik {
     })
     telefon: string;
 
+    @Column({
+        name: 'username',
+        nullable: false,
+        // unique: true,
+        length: 100,
+        type: 'varchar'
+    })
+    username: string;
+
+    @Column({
+        name: 'hashed_password',
+        nullable: false,
+        type: 'text'
+    })
+    hashedPassword: string;
+
+    @Column({
+        name: 'is_admin',
+        nullable: false,
+        type: 'int'
+    })
+    isAdmin: number;
+
     @OneToMany(type => Rezervacija, rezervacija => rezervacija.korisnik)
     rezervacije: Rezervacija[];
 
