@@ -23,5 +23,12 @@ export class RezervacijaRepository {
         return getManager().getRepository(Rezervacija).delete(id);
     };
 
+    // getRezervacijeByAutomobilID = (id: number): Promise<Rezervacija[]> => {
+    //     // return getManager().query(`SELECT * FROM rezervacije WHERE automobil_id = ?`, [id]); // sa predavanja
+
+    //     return getManager().getRepository(Rezervacija)
+    //                        .query("SELECT * FROM rezervacije WHERE automobil_id = ?", [id]);
+    // }; // Ne moze. Vraca sirov rezultat iz baze - ne moze da se prebaci u niz tipa Rezervacije.
+
 }
 

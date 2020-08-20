@@ -24,9 +24,15 @@ export const insertRezervacija = (req: Request, res: Response) => {
     let rezervacija: Rezervacija = Object.create(req.body);
     let rezervacijaRepository: RezervacijaRepository = new RezervacijaRepository();
     rezervacijaRepository.insertRezervacija(rezervacija).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 
