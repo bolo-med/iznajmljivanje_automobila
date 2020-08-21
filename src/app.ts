@@ -15,6 +15,7 @@ import passport from 'passport';
 import passportCustom from 'passport-custom';
 import { KorisnikRepository } from './repositories/korisnik-repository';
 import crypto from 'crypto';
+import expressjwt from 'express-jwt';
 
 class App {
 
@@ -62,12 +63,19 @@ class App {
     }
 
     private routing() {
+
+        let auth = expressjwt({
+            secret: 'SECRET',
+            userProperty: 'body.userData',
+            algorithms: ['HS256']
+        });
+
         this.serverApp.use('/proizvodjaci', proizvodjacRouter);
         this.serverApp.use('/modeli', modelRouter);
         this.serverApp.use('/statusi', statusRouter);
         this.serverApp.use('', korisnikRouter);
         this.serverApp.use('/automobili', automobilRouter);
-        this.serverApp.use('/rezervacije', rezervacijaRouter);
+        this.serverApp.use('/rezervacije', auth, rezervacijaRouter);
         this.serverApp.use('/upload', uploadRouter);
     }
 
