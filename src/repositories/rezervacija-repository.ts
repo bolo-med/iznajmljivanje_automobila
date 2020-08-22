@@ -4,7 +4,11 @@ import { Rezervacija } from './../models/rezervacija-model';
 export class RezervacijaRepository {
 
     getAllRezervacije = () => {
-        return getManager().getRepository(Rezervacija).find();
+        return getManager().getRepository(Rezervacija).find({ relations: ['automobil', 
+                                                                          'automobil.proizvodjac', 
+                                                                          'automobil.model', 
+                                                                          'automobil.status', 
+                                                                          'korisnik'] });
     };
 
     getRezervacijaByID = (id: number) => {
