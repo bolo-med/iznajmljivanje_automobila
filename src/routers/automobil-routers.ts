@@ -11,11 +11,11 @@ let auth = expressjwt({
 });
 
 automobilRouter.route('').get(automobilControllers.getAllAutomobili)
-                         .post(automobilControllers.insertAutomobil)
-                         .put(automobilControllers.updateAutomobil);
+                         .post(auth, automobilControllers.insertAutomobil)
+                         .put(auth, automobilControllers.updateAutomobil);
 
 automobilRouter.route('/:id').get(auth, automobilControllers.getAutomobilByID)
-                             .delete(automobilControllers.deleteAutomobil);
+                             .delete(auth, automobilControllers.deleteAutomobil);
 
 export default automobilRouter;
 
