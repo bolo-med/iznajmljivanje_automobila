@@ -4,6 +4,7 @@ import { Korisnik } from './../models/korisnik-model';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
+import korisnikRouter from '../routers/korisnik-routers';
 
 export const getAllKorisnici = (req: Request, res: Response) => {
     let korisnikRepository: KorisnikRepository = new KorisnikRepository();
@@ -42,11 +43,20 @@ export const updateKorisnik = (req: Request, res: Response) => {
     korisnik.godRodjenja = req.body.godRodjenja;
     korisnik.adresa = req.body.adresa;
     korisnik.telefon = req.body.telefon;
+    korisnik.username = req.body.username;
+    korisnik.hashedPassword = crypto.pbkdf2Sync(req.body.password, 'SALT', 1000, 64, 'SHA512').toString('hex');
+    korisnik.isAdmin = req.body.isAdmin;
     let korisnikRepository: KorisnikRepository = new KorisnikRepository();
     korisnikRepository.updateKorisnik(korisnik).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: null
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: null
+        });
     });
 };
 
@@ -126,5 +136,29 @@ export const login = (request: Request, response: Response) => {
             });
         }
     })(request, response);
+};
+
+export const checkPasswrd = (req: Request, res: Response) => {
+    let korisnikRepository: KorisnikRepository = new KorisnikRepository();
+    korisnikRepository.getKorisnikByID(req.body.id).then(data => {
+        let hash = crypto.pbkdf2Sync(req.body.password, 'SALT', 1000, 64, 'SHA512').toString('hex');
+        if (hash.toLocaleLowerCase() === data.hashedPassword.toLowerCase()) {
+            res.send({
+                status: 0,
+                data: null
+            });
+        }
+        else {
+            res.send({
+                status: 1,
+                data: null
+            });
+        }
+    }).catch(err => {
+        res.send({
+            status: -1,
+            data: null
+        });
+    });
 };
 

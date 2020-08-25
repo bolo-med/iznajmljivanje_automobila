@@ -20,5 +20,7 @@ korisnikRouter.route('/korisnici/:id').get(auth, korisnikControllers.getKorisnik
 korisnikRouter.post('/register', korisnikControllers.register);
 korisnikRouter.post('/login', korisnikControllers.login);
 
+korisnikRouter.post('/pass-usr', auth, korisnikControllers.checkPasswrd);
+
 export default korisnikRouter;
 
