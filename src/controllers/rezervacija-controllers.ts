@@ -45,12 +45,19 @@ export const updateRezervacija = (req: Request, res: Response) => {
     rezervacija.datumPreuzimanja = req.body.datumPreuzimanja;
     rezervacija.datumVracanja = req.body.datumVracanja;
     rezervacija.realizovana = req.body.realizovana;
-    rezervacija.datumStvarnogVracanja = req.body.datumStvarnogVracanja;
+    // rezervacija.datumStvarnogVracanja = req.body.datumStvarnogVracanja;
+    rezervacija.datumStvarnogVracanja = req.body.datumStvarnogVracanjaStr;
     let rezervacijaRepository: RezervacijaRepository = new RezervacijaRepository();
     rezervacijaRepository.updateRezervacija(rezervacija).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 
