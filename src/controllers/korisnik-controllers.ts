@@ -92,7 +92,7 @@ export const register = (request: Request, response: Response) => {
         expiry.setDate(expiry.getDate() + 1);
 
         let token = jwt.sign({
-            id: data.identifiers[0],
+            id: data.identifiers[0].id, // dodato '.id', u odnosu na predavanja. Sad vraca broj, a prije je - objekat.
             username: request.body.username,
             isAdmin: 0,
             expiry: expiry
@@ -162,3 +162,25 @@ export const checkPasswrd = (req: Request, res: Response) => {
     });
 };
 
+export const getKorisnikByUsername = (req: Request, res: Response) => {
+    let korisnikRepository: KorisnikRepository = new KorisnikRepository();
+    korisnikRepository.getKorisnikByUsername(req.params.uname).then(data => {
+        if (data) {
+            res.send({
+                status: 0,
+                data: null
+            });
+        }
+        else {
+            res.send({
+                status: -2,
+                data: data
+            });
+        }
+    }).catch(err => {
+        res.send({
+            status: -1,
+            data: err
+        });
+    });
+};
