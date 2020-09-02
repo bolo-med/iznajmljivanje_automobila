@@ -32,7 +32,7 @@ export class Automobil {
         nullable: false,
         type: 'int'
     })
-    godiste: Number;
+    godiste: number;
 
     @Column({
         name: 'motor',
@@ -42,13 +42,13 @@ export class Automobil {
     })
     motor: string;
 
-    @Column({
-        name: 'mjenjac',
-        length: 20,
-        nullable: false,
-        type: 'varchar'
-    })
-    mjenjac: string;
+    // @Column({
+    //     name: 'mjenjac',
+    //     length: 20,
+    //     nullable: false,
+    //     type: 'varchar'
+    // })
+    // mjenjac: string;
 
     @Column({
         name: 'status_id',
@@ -71,6 +71,20 @@ export class Automobil {
         type: 'double'
     })
     cijena: number;
+
+    @Column({
+        name: 'autom_mjenjac',
+        nullable: false,
+        type: 'boolean'
+    })
+    automatskiMjenjac: boolean;
+
+    @Column({
+        name: 'br_putnika',
+        nullable: false,
+        type: 'int'
+    })
+    brPutnika: number;
 
     @ManyToOne(type => Status, status => status.automobili)
     @JoinColumn({name: 'status_id'})

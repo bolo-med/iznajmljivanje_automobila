@@ -44,10 +44,12 @@ export const updateAutomobil = (req: Request, res: Response) => {
     automobil.modelID = req.body.modelID;
     automobil.godiste = req.body.godiste;
     automobil.motor = req.body.motor;
-    automobil.mjenjac = req.body.mjenjac;
+    // automobil.mjenjac = req.body.mjenjac;
     automobil.statusID = req.body.statusID;
     automobil.fotografija = req.body.fotografija;
     automobil.cijena = req.body.cijena;
+    automobil.automatskiMjenjac = req.body.automatskiMjenjac;
+    automobil.brPutnika = req.body.brPutnika;
     let automobilRepository: AutomobilRepository = new AutomobilRepository();
     automobilRepository.updateAutomobil(automobil).then(data => {
         res.send({
