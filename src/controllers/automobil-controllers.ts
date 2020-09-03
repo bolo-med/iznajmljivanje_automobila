@@ -14,9 +14,15 @@ export const getAllAutomobili = (req: Request, res: Response) => {
 export const getAutomobilByID = (req: Request, res: Response) => {
     let automobilRepository: AutomobilRepository = new AutomobilRepository();
     automobilRepository.getAutomobilByID(+req.params.id).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 
