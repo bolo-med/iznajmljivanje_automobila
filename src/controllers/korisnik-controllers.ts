@@ -4,7 +4,6 @@ import { Korisnik } from './../models/korisnik-model';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
-import korisnikRouter from '../routers/korisnik-routers';
 
 export const getAllKorisnici = (req: Request, res: Response) => {
     let korisnikRepository: KorisnikRepository = new KorisnikRepository();
