@@ -43,7 +43,12 @@ export const updateKorisnik = (req: Request, res: Response) => {
     korisnik.adresa = req.body.adresa;
     korisnik.telefon = req.body.telefon;
     korisnik.username = req.body.username;
-    korisnik.hashedPassword = crypto.pbkdf2Sync(req.body.password, 'SALT', 1000, 64, 'SHA512').toString('hex');
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if (req.body.password) {
+        korisnik.hashedPassword = crypto.pbkdf2Sync(req.body.password, 'SALT', 1000, 64, 'SHA512').toString('hex');
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // korisnik.hashedPassword = crypto.pbkdf2Sync(req.body.password, 'SALT', 1000, 64, 'SHA512').toString('hex');
     korisnik.isAdmin = req.body.isAdmin;
     let korisnikRepository: KorisnikRepository = new KorisnikRepository();
     korisnikRepository.updateKorisnik(korisnik).then(data => {
@@ -62,9 +67,15 @@ export const updateKorisnik = (req: Request, res: Response) => {
 export const deleteKorisnik = (req: Request, res: Response) => {
     let korisnikRepository: KorisnikRepository = new KorisnikRepository();
     korisnikRepository.deleteKorisnik(+req.params.id).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 

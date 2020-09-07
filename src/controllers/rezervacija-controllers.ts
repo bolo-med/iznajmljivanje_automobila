@@ -64,9 +64,15 @@ export const updateRezervacija = (req: Request, res: Response) => {
 export const deleteRezervacija = (req: Request, res: Response) => {
     let rezervacijaRepository: RezervacijaRepository = new RezervacijaRepository();
     rezervacijaRepository.deleteRezervacija(+req.params.id).then(data => {
-        res.send(data);
+        res.send({
+            status: 0,
+            data: data
+        });
     }).catch(err => {
-        res.send(err);
+        res.send({
+            status: -1,
+            data: err
+        });
     });
 };
 
